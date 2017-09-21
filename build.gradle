@@ -1,0 +1,71 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.sparkjava:spark-core:2.5.5'
+    compile 'org.slf4j:slf4j-simple:1.7.22'
+    compile 'org.postgresql:postgresql:9.4.1212'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'net.dongliu:gson-java8-datatype:1.0.2'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    testCompile 'org.mockito:mockito-core:2.7.1'
+    testCompile 'com.jayway.jsonpath:json-path-assert:2.2.0'
+}
+
+sourceSets {
+    integrationTest {
+        compileClasspath += main.output
+        runtimeClasspath += main.output
+    }
+    journeyTest
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+
+    journeyTestCompile.extendsFrom testCompile
+    journeyTestRuntime.extendsFrom testRuntime
+}
+
+// See http://stackoverflow.com/a/36199263/1668119 for explanation
+tasks.withType(Test) {
+    testLogging {
+        events TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_ERROR,
+                TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showCauses true
+        showExceptions true
+        showStackTraces true
+    }
+}
+
+task integrationTest(type: Test) {
+    description 'Runs the integration tests.'
+    group 'Verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+task journeyTest(type: Test) {
+    description 'Runs the journey tests.'
+    group 'Verification'
+    testClassesDirs = sourceSets.journeyTest.output.classesDirs
+    classpath = sourceSets.journeyTest.runtimeClasspath
+}
+
+check.dependsOn integrationTest, journeyTest
+
+mainClassName = 'com.charleskorn.banking.internationaltransfers.Application'

@@ -1,0 +1,14 @@
+{
+  "imposters": [
+    {
+      "port": 6000,
+      "protocol": "http",
+      "name": "exchange-rate-service",
+      "stubs": [
+        <% include exchangeRate.json %>,
+        <% include ping.json %>,
+        <% include 404.json %>
+      ]
+    }
+  ]
+}

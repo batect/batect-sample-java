@@ -1,0 +1,70 @@
+project_name: international-transfers-service
+
+containers:
+  build-env:
+    image: openjdk:8u141-jdk
+    volumes:
+      - .:/code
+      - .gradle-cache:/root/.gradle
+    working_directory: /code
+    environment:
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+
+  database:
+    build_directory: dev-infrastructure/database
+    environment:
+      - POSTGRES_USER=international-transfers-service
+      - POSTGRES_PASSWORD=TheSuperSecretPassword
+      - POSTGRES_DB=international-transfers-service
+
+  exchange-rate-service:
+    build_directory: dev-infrastructure/exchange-rate-service-fake
+
+  international-transfers-service:
+    build_directory: dev-infrastructure/international-transfers-service
+    ports:
+      - 6001:6001
+    dependencies:
+      - database
+      - exchange-rate-service
+
+tasks:
+  build:
+    description: Build the application.
+    run:
+      container: build-env
+      command: sh -c './gradlew assembleDist && cp build/distributions/international-transfers-service.zip dev-infrastructure/international-transfers-service/app.zip'
+
+  unitTest:
+    description: Run the unit tests.
+    run:
+      container: build-env
+      command: ./gradlew test
+
+  continuousUnitTest:
+    description: Run the unit tests and then re-run them when any code changes are detected.
+    run:
+      container: build-env
+      command: ./gradlew --continuous test
+
+  integrationTest:
+    description: Run the integration tests.
+    run:
+      container: build-env
+      command: ./gradlew integrationTest
+    start:
+      - database
+      - exchange-rate-service
+
+  journeyTest:
+    description: Run the journey tests. (Note that due to batect not yet supporting dependencies between tasks, you must run `batect run build` before running this task.)
+    run:
+      container: build-env
+      command: ./gradlew journeyTest
+    start:
+      - international-transfers-service
+
+  app:
+    description: Run the application. (Note that due to batect not yet supporting dependencies between tasks, you must run `batect run build` before running this task.)
+    run:
+      container: international-transfers-service
