@@ -68,3 +68,9 @@ tasks:
     description: Run the application. (Note that due to batect not yet supporting dependencies between tasks, you must run `batect run build` before running this task.)
     run:
       container: international-transfers-service
+
+  shell:
+    description: Start a shell in the development environment.
+    run:
+      container: build-env
+      command: bash
