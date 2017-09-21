@@ -4,14 +4,14 @@ services:
 jobs:
   include:
     - stage: build
-      script: ./batect build
+      script: ./batect run build
 
     - stage: unit test
-      script: ./batect unitTest
+      script: ./batect run unitTest
 
     - stage: integration test
-      script: ./batect integrationTest
+      script: ./batect run integrationTest
 
     - stage: journey test
       # The build step below is required until batect supports specifying dependencies between tasks.
-      script: ./batect build && ./batect journeyTest
+      script: ./batect run build && ./batect run journeyTest
