@@ -57,17 +57,21 @@ tasks:
       - exchange-rate-service
 
   journeyTest:
-    description: Run the journey tests. (Note that due to batect not yet supporting dependencies between tasks, you must run `batect run build` before running this task.)
+    description: Run the journey tests.
     run:
       container: build-env
       command: ./gradlew journeyTest
     start:
       - international-transfers-service
+    prerequisites:
+      - build
 
   app:
-    description: Run the application. (Note that due to batect not yet supporting dependencies between tasks, you must run `batect run build` before running this task.)
+    description: Run the application.
     run:
       container: international-transfers-service
+    prerequisites:
+      - build
 
   shell:
     description: Start a shell in the development environment.

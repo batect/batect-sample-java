@@ -13,5 +13,4 @@ jobs:
       script: ./batect run integrationTest
 
     - stage: journey test
-      # The build step below is required until batect supports specifying dependencies between tasks.
-      script: ./batect run build && ./batect run journeyTest
+      script: ./batect run journeyTest
