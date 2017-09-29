@@ -7,7 +7,7 @@ RUN mkdir -p /tools
 COPY health-check.sh /tools
 
 RUN mkdir -p /app /tmp/unzip
-COPY app.zip /tmp/app.zip
+COPY international-transfers-service.zip /tmp/app.zip
 RUN unzip /tmp/app.zip -d /tmp/unzip && cp -rf /tmp/unzip/*/* /app
 
 CMD ["/app/bin/international-transfers-service"]

@@ -33,7 +33,7 @@ tasks:
     description: Build the application.
     run:
       container: build-env
-      command: sh -c './gradlew assembleDist && cp build/distributions/international-transfers-service.zip dev-infrastructure/international-transfers-service/app.zip'
+      command: sh -c './gradlew assembleDistForContainer'
 
   unitTest:
     description: Run the unit tests.
