@@ -33,7 +33,7 @@ tasks:
     description: Build the application.
     run:
       container: build-env
-      command: sh -c './gradlew assembleDistForContainer'
+      command: ./gradlew assembleDistForContainer
 
   unitTest:
     description: Run the unit tests.
