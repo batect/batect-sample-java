@@ -28,6 +28,13 @@ containers:
       - database
       - exchange-rate-service
 
+  docker-push-env:
+    image: docker:17.09.0-ce
+    volumes:
+      - .:/code
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_directory: /code
+
 tasks:
   build:
     description: Build the application.
@@ -78,3 +85,14 @@ tasks:
     run:
       container: build-env
       command: bash
+
+  pushImage:
+    description: Build and push the production application image to Docker Hub.
+    run:
+      container: docker-push-env
+      command: ./dev-infrastructure/buildAndPushImage.sh
+      environment:
+        - DOCKER_USER=$DOCKER_USER
+        - DOCKER_PASSWORD=$DOCKER_PASSWORD
+    prerequisites:
+      - build

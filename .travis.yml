@@ -14,3 +14,6 @@ jobs:
 
     - stage: journey test
       script: ./batect run journeyTest
+
+    - stage: push image
+      script: ./batect run pushImage
