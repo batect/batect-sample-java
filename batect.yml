@@ -29,7 +29,7 @@ containers:
       - exchange-rate-service
 
   docker-push-env:
-    image: docker:17.09.0-ce
+    build_directory: dev-infrastructure/docker-push-env
     volumes:
       - .:/code
       - /var/run/docker.sock:/var/run/docker.sock
