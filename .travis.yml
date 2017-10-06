@@ -17,3 +17,14 @@ jobs:
 
     - stage: push image
       script: ./batect run pushImage
+
+before_cache:
+  - rm -f  .gradle-cache/caches/modules-2/modules-2.lock
+  - rm -fr .gradle-cache/caches/*/plugin-resolution/
+  - rm -f  .gradle-cache/caches/*/fileHashes/fileHashes.bin
+  - rm -f  .gradle-cache/caches/*/fileHashes/fileHashes.lock
+
+cache:
+  directories:
+    - .gradle-cache/caches/
+    - .gradle-cache/wrapper/
