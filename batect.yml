@@ -4,8 +4,8 @@ containers:
   build-env:
     image: openjdk:8u141-jdk
     volumes:
-      - .:/code
-      - .gradle-cache:/root/.gradle
+      - .:/code:cached
+      - .gradle-cache:/root/.gradle:cached
     working_directory: /code
     environment:
       - GRADLE_OPTS=-Dorg.gradle.daemon=false
@@ -31,7 +31,7 @@ containers:
   docker-push-env:
     build_directory: dev-infrastructure/docker-push-env
     volumes:
-      - .:/code
+      - .:/code:cached
       - /var/run/docker.sock:/var/run/docker.sock
     working_directory: /code
 
