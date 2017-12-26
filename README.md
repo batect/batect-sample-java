@@ -7,7 +7,7 @@ build and testing environments.
 
 ## Building, testing, running etc.
 
-Run `./batect tasks` to see the available commands and their descriptions, then `./batect run <task>` to run `<task>`.
+Run `./batect --list-tasks` to see the available commands and their descriptions, then `./batect <task>` to run `<task>`.
 
 All of this is controlled by [batect.yml](batect.yml), and it shows a number of common patterns you might adopt in your own
 application - things like tasks for different kinds of tests, a task to run the application, and a task to start a shell

@@ -11,19 +11,19 @@ before_install:
 jobs:
   include:
     - stage: build
-      script: ./batect run build
+      script: ./batect build
 
     - stage: unit test
-      script: ./batect run unitTest
+      script: ./batect unitTest
 
     - stage: integration test
-      script: ./batect run integrationTest
+      script: ./batect integrationTest
 
     - stage: journey test
-      script: ./batect run journeyTest
+      script: ./batect journeyTest
 
     - stage: push image
-      script: ./batect run pushImage
+      script: ./batect pushImage
 
 before_cache:
   - rm -f  .gradle-cache/caches/modules-2/modules-2.lock
