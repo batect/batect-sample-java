@@ -5,10 +5,13 @@ containers:
     image: openjdk:8u141-jdk
     volumes:
       - .:/code:cached
-      - .gradle-cache:/root/.gradle:cached
+      - .gradle-cache:/home/container-user/.gradle:cached
     working_directory: /code
     environment:
       - GRADLE_OPTS=-Dorg.gradle.daemon=false
+    run_as_current_user:
+      enabled: true
+      home_directory: /home/container-user
 
   database:
     build_directory: dev-infrastructure/database
