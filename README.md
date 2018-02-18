@@ -1,6 +1,6 @@
 # international-transfers-service
 
-[![Build Status](https://travis-ci.org/charleskorn/batect-sample.svg?branch=master)](https://travis-ci.org/charleskorn/batect-sample)
+[![Build Status](https://travis-ci.org/charleskorn/batect-sample-java.svg?branch=master)](https://travis-ci.org/charleskorn/batect-sample-java)
 
 A sample service with two dependencies (a database and another service) with [batect](https://github.com/charleskorn/batect)-based
 build and testing environments.
