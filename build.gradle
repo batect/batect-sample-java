@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.sparkjava:spark-core:2.5.5'
+    compile 'com.sparkjava:spark-core:2.7.1'
     compile 'org.slf4j:slf4j-simple:1.7.22'
     compile 'org.postgresql:postgresql:42.2.1'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
