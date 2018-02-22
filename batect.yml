@@ -4,8 +4,12 @@ containers:
   build-env:
     image: openjdk:8u141-jdk
     volumes:
-      - .:/code:cached
-      - .gradle-cache:/home/container-user/.gradle:cached
+      - local: .
+        container: /code
+        options: cached
+      - local: .gradle-cache
+        container: /home/container-user/.gradle
+        options: cached
     working_directory: /code
     environment:
       - GRADLE_OPTS=-Dorg.gradle.daemon=false
@@ -26,7 +30,8 @@ containers:
   international-transfers-service:
     build_directory: dev-infrastructure/international-transfers-service
     ports:
-      - 6001:6001
+      - local: 6001
+        container: 6001
     dependencies:
       - database
       - exchange-rate-service
@@ -34,8 +39,11 @@ containers:
   docker-push-env:
     build_directory: dev-infrastructure/docker-push-env
     volumes:
-      - .:/code:cached
-      - /var/run/docker.sock:/var/run/docker.sock
+      - local: .
+        container: /code
+        options: cached
+      - local: /var/run/docker.sock
+        container: /var/run/docker.sock
     working_directory: /code
 
 tasks:

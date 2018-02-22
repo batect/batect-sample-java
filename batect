@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-VERSION="0.10"
-DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"https://github.com/charleskorn/batect/releases/download/0.10/batect-0.10.jar"}
+VERSION="0.11"
+DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"https://github.com/charleskorn/batect/releases/download/0.11/batect-0.11.jar"}
 
 ROOT_CACHE_DIR=${BATECT_CACHE_DIR:-"$HOME/.batect/cache"}
 CACHE_DIR="$ROOT_CACHE_DIR/$VERSION"
@@ -41,7 +41,7 @@ function runApplication() {
         exit -1
     fi
 
-    java -jar "$JAR_PATH" "$@"
+    java -Djava.net.useSystemProxies=true -jar "$JAR_PATH" "$@"
 }
 
 main "$@"
