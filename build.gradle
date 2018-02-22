@@ -16,7 +16,7 @@ dependencies {
     compile 'com.sparkjava:spark-core:2.5.5'
     compile 'org.slf4j:slf4j-simple:1.7.22'
     compile 'org.postgresql:postgresql:9.4.1212'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'net.dongliu:gson-java8-datatype:1.1.0'
     testCompile 'junit:junit:4.12'
