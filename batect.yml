@@ -59,29 +59,29 @@ tasks:
 
   integrationTest:
     description: Run the integration tests.
-    run:
-      container: build-env
-      command: ./gradlew integrationTest
     start:
       - database
       - exchange-rate-service
+    run:
+      container: build-env
+      command: ./gradlew integrationTest
 
   journeyTest:
     description: Run the journey tests.
+    prerequisites:
+      - build
+    start:
+      - international-transfers-service
     run:
       container: build-env
       command: ./gradlew journeyTest
-    start:
-      - international-transfers-service
-    prerequisites:
-      - build
 
   app:
     description: Run the application.
-    run:
-      container: international-transfers-service
     prerequisites:
       - build
+    run:
+      container: international-transfers-service
 
   shell:
     description: Start a shell in the development environment.
@@ -91,11 +91,11 @@ tasks:
 
   pushImage:
     description: Build and push the production application image to Docker Hub.
+    prerequisites:
+      - build
     run:
       container: docker-push-env
       command: ./dev-infrastructure/buildAndPushImage.sh
       environment:
         - DOCKER_USER=$DOCKER_USER
         - DOCKER_PASSWORD=$DOCKER_PASSWORD
-    prerequisites:
-      - build
