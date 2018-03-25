@@ -67,7 +67,7 @@ tasks:
 
   integrationTest:
     description: Run the integration tests.
-    start:
+    dependencies:
       - database
       - exchange-rate-service
     run:
@@ -78,7 +78,7 @@ tasks:
     description: Run the journey tests.
     prerequisites:
       - build
-    start:
+    dependencies:
       - international-transfers-service
     run:
       container: build-env
