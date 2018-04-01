@@ -29,9 +29,6 @@ containers:
 
   international-transfers-service:
     build_directory: dev-infrastructure/international-transfers-service
-    ports:
-      - local: 6001
-        container: 6001
     dependencies:
       - database
       - exchange-rate-service
@@ -90,6 +87,9 @@ tasks:
       - build
     run:
       container: international-transfers-service
+      ports:
+        - local: 6001
+          container: 6001
 
   shell:
     description: Start a shell in the development environment.
