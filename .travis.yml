@@ -8,22 +8,7 @@ before_install:
   - sudo apt-get -y install docker-ce
   - docker --version
 
-jobs:
-  include:
-    - stage: build
-      script: ./batect build
-
-    - stage: unit test
-      script: ./batect unitTest
-
-    - stage: integration test
-      script: ./batect integrationTest
-
-    - stage: journey test
-      script: ./batect journeyTest
-
-    - stage: push image
-      script: ./batect pushImage
+script: ./travis/build.sh
 
 before_cache:
   - rm -f  .gradle-cache/caches/modules-2/modules-2.lock
