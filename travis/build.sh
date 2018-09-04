@@ -18,6 +18,11 @@ echo "Running journey tests..."
 ./batect journeyTest
 echo
 
-echo "Pushing image..."
-./batect pushImage
+if [ -z "${DOCKER_USER:+x}" ] || [ -z "${DOCKER_PASSWORD:+x}"  ]; then
+    echo "DOCKER_USER or DOCKER_PASSWORD not set, not pushing image to Docker Hub."
+else
+    echo "Pushing image..."
+    ./batect pushImage
+fi
+
 echo
