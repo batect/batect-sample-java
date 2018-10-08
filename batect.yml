@@ -12,7 +12,7 @@ containers:
         options: cached
     working_directory: /code
     environment:
-      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
     run_as_current_user:
       enabled: true
       home_directory: /home/container-user
@@ -20,9 +20,9 @@ containers:
   database:
     build_directory: dev-infrastructure/database
     environment:
-      - POSTGRES_USER=international-transfers-service
-      - POSTGRES_PASSWORD=TheSuperSecretPassword
-      - POSTGRES_DB=international-transfers-service
+      POSTGRES_USER: international-transfers-service
+      POSTGRES_PASSWORD: TheSuperSecretPassword
+      POSTGRES_DB: international-transfers-service
 
   exchange-rate-service:
     build_directory: dev-infrastructure/exchange-rate-service-fake
@@ -105,5 +105,5 @@ tasks:
       container: docker-push-env
       command: ./dev-infrastructure/buildAndPushImage.sh
       environment:
-        - DOCKER_USER=$DOCKER_USER
-        - DOCKER_PASSWORD=$DOCKER_PASSWORD
+        DOCKER_USER: $DOCKER_USER
+        DOCKER_PASSWORD: $DOCKER_PASSWORD
