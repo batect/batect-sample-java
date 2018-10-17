@@ -97,6 +97,12 @@ tasks:
       container: build-env
       command: bash
 
+  outdated:
+    description: Check for outdated dependencies.
+    run:
+      container: build-env
+      command: ./gradlew dependencyUpdates -Drevision=release
+
   pushImage:
     description: Build and push the production application image to Docker Hub.
     prerequisites:
