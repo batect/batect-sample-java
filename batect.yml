@@ -2,7 +2,7 @@ project_name: international-transfers-service
 
 containers:
   build-env:
-    image: openjdk:8u141-jdk
+    image: openjdk:8u181-jdk
     volumes:
       - local: .
         container: /code
