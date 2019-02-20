@@ -70,8 +70,6 @@ task journeyTest(type: Test) {
     classpath = sourceSets.journeyTest.runtimeClasspath
 }
 
-check.dependsOn integrationTest, journeyTest
-
 mainClassName = 'com.charleskorn.banking.internationaltransfers.Application'
 
 task assembleDistForContainer(type: Copy) {
