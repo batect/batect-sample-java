@@ -46,24 +46,28 @@ containers:
 tasks:
   build:
     description: Build the application.
+    group: Build tasks
     run:
       container: build-env
       command: ./gradlew assembleDistForContainer
 
   unitTest:
     description: Run the unit tests.
+    group: Test tasks
     run:
       container: build-env
       command: ./gradlew test
 
   continuousUnitTest:
     description: Run the unit tests and then re-run them when any code changes are detected.
+    group: Test tasks
     run:
       container: build-env
       command: ./gradlew --continuous test
 
   integrationTest:
     description: Run the integration tests.
+    group: Test tasks
     dependencies:
       - database
       - exchange-rate-service
@@ -73,6 +77,7 @@ tasks:
 
   journeyTest:
     description: Run the journey tests.
+    group: Test tasks
     prerequisites:
       - build
     dependencies:
@@ -83,6 +88,7 @@ tasks:
 
   app:
     description: Run the application.
+    group: Test tasks
     prerequisites:
       - build
     run:
@@ -93,18 +99,21 @@ tasks:
 
   shell:
     description: Start a shell in the development environment.
+    group: Utility tasks
     run:
       container: build-env
       command: bash
 
   outdated:
     description: Check for outdated dependencies.
+    group: Utility tasks
     run:
       container: build-env
       command: ./gradlew dependencyUpdates -Drevision=release
 
   pushImage:
     description: Build and push the production application image to Docker Hub.
+    group: Publishing tasks
     prerequisites:
       - build
     run:
