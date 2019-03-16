@@ -1,6 +1,6 @@
-FROM alpine:3.8
+FROM alpine:3.8.4
 
-RUN apk add --no-cache openjdk8-jre
+RUN apk add --no-cache openjdk8-jre nss
 RUN apk add --no-cache curl
 
 RUN mkdir -p /tools
