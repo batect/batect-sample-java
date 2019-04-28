@@ -3,8 +3,13 @@
 {
     set -euo pipefail
 
-    VERSION="0.30.0"
-    DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"https://github.com/charleskorn/batect/releases/download/0.30.0/batect-0.30.0.jar"}
+    # This file is part of batect.
+    # Do not modify this file, it will be overwritten next time you upgrade batect.
+    # You should commit this file to version control alongside the rest of your project. It should not be installed globally.
+    # For more information, visit https://github.com/charleskorn/batect.
+
+    VERSION="0.31.0"
+    DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"https://github.com/charleskorn/batect/releases/download/0.31.0/batect-0.31.0.jar"}
 
     ROOT_CACHE_DIR=${BATECT_CACHE_DIR:-"$HOME/.batect/cache"}
     CACHE_DIR="$ROOT_CACHE_DIR/$VERSION"
