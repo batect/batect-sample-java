@@ -19,6 +19,22 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.14.1'
     compile 'com.google.code.gson:gson:2.8.5'
     compile 'net.dongliu:gson-java8-datatype:1.1.0'
+
+    constraints {
+        implementation('org.eclipse.jetty:jetty-webapp:9.4.18.v20190429') {
+            because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
+        }
+        implementation('org.eclipse.jetty:jetty-server:9.4.18.v20190429') {
+            because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
+        }
+        implementation('org.eclipse.jetty.websocket:websocket-server:9.4.18.v20190429') {
+            because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
+        }
+        implementation('org.eclipse.jetty.websocket:websocket-servlet:9.4.18.v20190429') {
+            because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
+        }
+    }
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
     testCompile 'org.mockito:mockito-core:2.27.0'
