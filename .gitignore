@@ -84,4 +84,4 @@ gradle-app.setting
 
 ### app-specific entries
 .gradle-cache/
-dev-infrastructure/international-transfers-service/international-transfers-service.zip
+.batect/international-transfers-service/international-transfers-service.zip

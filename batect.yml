@@ -18,23 +18,23 @@ containers:
       home_directory: /home/container-user
 
   database:
-    build_directory: dev-infrastructure/database
+    build_directory: .batect/database
     environment:
       POSTGRES_USER: international-transfers-service
       POSTGRES_PASSWORD: TheSuperSecretPassword
       POSTGRES_DB: international-transfers-service
 
   exchange-rate-service:
-    build_directory: dev-infrastructure/exchange-rate-service-fake
+    build_directory: .batect/exchange-rate-service-fake
 
   international-transfers-service:
-    build_directory: dev-infrastructure/international-transfers-service
+    build_directory: .batect/international-transfers-service
     dependencies:
       - database
       - exchange-rate-service
 
   docker-push-env:
-    build_directory: dev-infrastructure/docker-push-env
+    build_directory: .batect/docker-push-env
     volumes:
       - local: .
         container: /code
@@ -118,7 +118,7 @@ tasks:
       - build
     run:
       container: docker-push-env
-      command: ./dev-infrastructure/buildAndPushImage.sh
+      command: ./.batect/buildAndPushImage.sh
       environment:
         DOCKER_USER: $DOCKER_USER
         DOCKER_PASSWORD: $DOCKER_PASSWORD

@@ -90,7 +90,7 @@ mainClassName = 'com.charleskorn.banking.internationaltransfers.Application'
 
 task assembleDistForContainer(type: Copy) {
     from distZip
-    into 'dev-infrastructure/international-transfers-service'
+    into '.batect/international-transfers-service'
 }
 
 wrapper {
