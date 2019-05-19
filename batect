@@ -8,8 +8,9 @@
     # You should commit this file to version control alongside the rest of your project. It should not be installed globally.
     # For more information, visit https://github.com/charleskorn/batect.
 
-    VERSION="0.31.0"
-    DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"https://github.com/charleskorn/batect/releases/download/0.31.0/batect-0.31.0.jar"}
+    VERSION="0.32.0"
+    DOWNLOAD_URL_ROOT=${BATECT_DOWNLOAD_URL_ROOT:-"https://dl.bintray.com/charleskorn/batect"}
+    DOWNLOAD_URL=${BATECT_DOWNLOAD_URL:-"$DOWNLOAD_URL_ROOT/$VERSION/bin/batect-$VERSION.jar"}
 
     ROOT_CACHE_DIR=${BATECT_CACHE_DIR:-"$HOME/.batect/cache"}
     CACHE_DIR="$ROOT_CACHE_DIR/$VERSION"
