@@ -27,7 +27,7 @@ dependencies {
         implementation('org.eclipse.jetty:jetty-server:9.4.18.v20190429') {
             because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
         }
-        implementation('org.eclipse.jetty.websocket:websocket-server:9.4.18.v20190429') {
+        implementation('org.eclipse.jetty.websocket:websocket-server:9.4.19.v20190610') {
             because "earlier versions of Jetty have a security vulnerability and Spark hasn't updated to a fixed version yet"
         }
         implementation('org.eclipse.jetty.websocket:websocket-servlet:9.4.18.v20190429') {
