@@ -6,7 +6,7 @@ rem For more information, visit https://github.com/charleskorn/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.34.0"
+set "version=0.35.0"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.34.0'^
+$Version='0.35.0'^
 
 ^
 
@@ -144,7 +144,9 @@ function createCacheDir() {^
 
 function runApplication() {^
 
-    $javaVersion = checkJava^
+    $java = findJava^
+
+    $javaVersion = checkJavaVersion $java^
 
 ^
 
@@ -160,17 +162,43 @@ function runApplication() {^
 
 ^
 
+    $combinedArgs = $javaArgs + @("-Djava.net.useSystemProxies=true", "-jar", $JarPath) + $args^
+
     $env:HOSTNAME = $env:COMPUTERNAME^
 
-    java @javaArgs "-Djava.net.useSystemProxies=true" -jar $JarPath @args^
+^
 
-    exit $LASTEXITCODE^
+    $info = New-Object System.Diagnostics.ProcessStartInfo^
+
+    $info.FileName = $java.Source^
+
+    $info.Arguments = combineArgumentsToString($combinedArgs)^
+
+    $info.RedirectStandardError = $false^
+
+    $info.RedirectStandardOutput = $false^
+
+    $info.UseShellExecute = $false^
+
+^
+
+    $process = New-Object System.Diagnostics.Process^
+
+    $process.StartInfo = $info^
+
+    $process.Start() ^| Out-Null^
+
+    $process.WaitForExit()^
+
+^
+
+    exit $process.ExitCode^
 
 }^
 
 ^
 
-function checkJava() {^
+function findJava() {^
 
     $java = Get-Command "java" -ErrorAction SilentlyContinue^
 
@@ -186,7 +214,7 @@ function checkJava() {^
 
 ^
 
-    return checkJavaVersion $java^
+    return $java^
 
 }^
 
@@ -282,9 +310,31 @@ function getJavaVersion([System.Management.Automation.CommandInfo]$java) {^
 
 ^
 
+function combineArgumentsToString([Object[]]$arguments) {^
+
+    $combined = @()^
+
 ^
 
-main $args
+    $arguments ^| %% { $combined += escapeArgument($_) }^
+
+^
+
+    return $combined -join " "^
+
+}^
+
+^
+
+function escapeArgument([String]$argument) {^
+
+    return '"' + $argument.Replace('"', '"""') + '"'^
+
+}^
+
+^
+
+main @args
 
 if not exist "%cacheDir%" (
     mkdir "%cacheDir%"
@@ -300,7 +350,7 @@ rem If we modify the script while it is still running (eg. because we're updatin
 rem because it continues execution from the next byte (which was previously the end of the line).
 rem By explicitly exiting on the same line as starting the application, we avoid these issues as cmd.exe has already read the entire
 rem line before we start the application and therefore will always exit.
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File "%ps1Path%" %* && exit 0 || exit !ERRORLEVEL!
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File "%ps1Path%" %* && exit /b 0 || exit /b !ERRORLEVEL!
 
 rem What's this for?
 rem This is so the tests for the wrapper has a way to ensure that the line above terminates the script correctly.
