@@ -6,7 +6,7 @@ rem For more information, visit https://github.com/charleskorn/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.35.1"
+set "version=0.36.0"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.35.1'^
+$Version='0.36.0'^
 
 ^
 
@@ -222,7 +222,9 @@ function findJava() {^
 
 function checkJavaVersion([System.Management.Automation.CommandInfo]$java) {^
 
-    $rawVersion = getJavaVersion $java^
+    $versionInfo = getJavaVersionInfo $java^
+
+    $rawVersion = getJavaVersion $versionInfo^
 
     $parsedVersion = New-Object Version -ArgumentList $rawVersion^
 
@@ -242,13 +244,25 @@ function checkJavaVersion([System.Management.Automation.CommandInfo]$java) {^
 
 ^
 
+    if (-not ($versionInfo -match "64\-[bB]it")) {^
+
+        Write-Host -ForegroundColor Red "The version of Java that is available on your PATH is a 32-bit version, but batect requires a 64-bit Java runtime."^
+
+        Write-Host -ForegroundColor Red "If you have a 64-bit version of Java installed, please make sure your PATH is set correctly."^
+
+        exit 1^
+
+    }^
+
+^
+
     return $parsedVersion^
 
 }^
 
 ^
 
-function getJavaVersion([System.Management.Automation.CommandInfo]$java) {^
+function getJavaVersionInfo([System.Management.Automation.CommandInfo]$java) {^
 
     $info = New-Object System.Diagnostics.ProcessStartInfo^
 
@@ -276,7 +290,15 @@ function getJavaVersion([System.Management.Automation.CommandInfo]$java) {^
 
     $stderr = $process.StandardError.ReadToEnd()^
 
-    $versionLine = ($stderr -split [Environment]::NewLine)[0]^
+    return $stderr^
+
+}^
+
+^
+
+function getJavaVersion([String]$versionInfo) {^
+
+    $versionLine = ($versionInfo -split [Environment]::NewLine)[0]^
 
 ^
 
