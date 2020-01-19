@@ -1,8 +1,8 @@
 # international-transfers-service
 
-[![Build Status](https://travis-ci.org/charleskorn/batect-sample-java.svg?branch=master)](https://travis-ci.org/charleskorn/batect-sample-java)
+[![Build Status](https://travis-ci.org/batect/batect-sample-java.svg?branch=master)](https://travis-ci.org/batect/batect-sample-java)
 
-A sample service with two dependencies (a database and another service) with [batect](https://github.com/charleskorn/batect)-based
+A sample service with two dependencies (a database and another service) with [batect](https://github.com/batect/batect)-based
 build and testing environments.
 
 ## Building, testing, running etc.
@@ -44,6 +44,6 @@ A number of shortcuts have been taken, including:
 
 ## Links
 
-* [batect](https://github.com/charleskorn/batect)
+* [batect](https://github.com/batect/batect)
 * [Gradle Test Organisation](https://www.safaribooksonline.com/blog/2013/08/22/gradle-test-organization/)
 * [Sample Postgres Docker health check](https://github.com/docker-library/healthcheck/tree/master/postgres)
