@@ -2,11 +2,11 @@
 rem This file is part of batect.
 rem Do not modify this file, it will be overwritten next time you upgrade batect.
 rem You should commit this file to version control alongside the rest of your project. It should not be installed globally.
-rem For more information, visit https://github.com/charleskorn/batect.
+rem For more information, visit https://github.com/batect/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.41.0"
+set "version=0.41.1"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.41.0'^
+$Version='0.41.1'^
 
 ^
 
