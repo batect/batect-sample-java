@@ -22,7 +22,7 @@ dependencies {
 
     testCompile 'junit:junit:4.13'
     testCompile 'org.hamcrest:java-hamcrest:2.0.0.0'
-    testCompile 'org.mockito:mockito-core:3.3.0'
+    testCompile 'org.mockito:mockito-core:3.3.1'
     testCompile 'com.jayway.jsonpath:json-path-assert:2.4.0'
 }
 
