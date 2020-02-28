@@ -4,6 +4,13 @@ version: 1
 update_configs:
   - package_manager: docker
     update_schedule: daily
+    directory: .batect/build-env
+    automerged_updates:
+      - match:
+          dependency_type: all
+          update_type: all
+  - package_manager: docker
+    update_schedule: daily
     directory: .batect/database
     automerged_updates:
       - match:

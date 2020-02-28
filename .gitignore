@@ -83,5 +83,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 ### app-specific entries
-.gradle-cache/
+.batect/caches/
 .batect/international-transfers-service/international-transfers-service.zip
