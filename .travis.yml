@@ -13,6 +13,7 @@ before_cache:
   - rm -fr .batect/caches/gradle-cache/caches/*/plugin-resolution/
   - rm -f  .batect/caches/gradle-cache/caches/*/fileHashes/fileHashes.bin
   - rm -f  .batect/caches/gradle-cache/caches/*/fileHashes/fileHashes.lock
+  - rm -f  .batect/caches/gradle-cache/caches/*/javaCompile/javaCompile.lock
 
 cache:
   directories:
