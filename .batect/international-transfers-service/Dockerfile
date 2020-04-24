@@ -1,4 +1,4 @@
-FROM alpine:3.11.5
+FROM alpine:3.11.6
 
 RUN apk add --no-cache openjdk8-jre nss
 RUN apk add --no-cache curl
