@@ -6,7 +6,7 @@ rem For more information, visit https://github.com/batect/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.52.0"
+set "version=0.53.0"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.52.0'^
+$Version='0.53.0'^
 
 ^
 
@@ -52,9 +52,9 @@ $DownloadUrl = getValueOrDefault $env:BATECT_DOWNLOAD_URL "$DownloadUrlRoot/$Url
 
 $RootCacheDir = getValueOrDefault $env:BATECT_CACHE_DIR "$env:USERPROFILE\.batect\cache"^
 
-$CacheDir = "$RootCacheDir\$Version"^
+$VersionCacheDir = "$RootCacheDir\$Version"^
 
-$JarPath = "$CacheDir\batect-$Version.jar"^
+$JarPath = "$VersionCacheDir\batect-$Version.jar"^
 
 ^
 
@@ -132,9 +132,9 @@ function download() {^
 
 function createCacheDir() {^
 
-    if (-not (Test-Path $CacheDir)) {^
+    if (-not (Test-Path $VersionCacheDir)) {^
 
-        New-Item -ItemType Directory -Path $CacheDir ^| Out-Null^
+        New-Item -ItemType Directory -Path $VersionCacheDir ^| Out-Null^
 
     }^
 
@@ -165,6 +165,8 @@ function runApplication() {^
     $combinedArgs = $javaArgs + @("-Djava.net.useSystemProxies=true", "-jar", $JarPath) + $args^
 
     $env:HOSTNAME = $env:COMPUTERNAME^
+
+    $env:BATECT_WRAPPER_CACHE_DIR = $RootCacheDir^
 
 ^
 
