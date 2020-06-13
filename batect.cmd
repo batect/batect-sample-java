@@ -6,7 +6,7 @@ rem For more information, visit https://github.com/batect/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.53.1"
+set "version=0.54.0"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.53.1'^
+$Version='0.54.0'^
 
 ^
 
@@ -48,6 +48,8 @@ $UrlEncodedVersion = [Uri]::EscapeDataString($Version)^
 
 $DownloadUrl = getValueOrDefault $env:BATECT_DOWNLOAD_URL "$DownloadUrlRoot/$UrlEncodedVersion/bin/batect-$UrlEncodedVersion.jar"^
 
+$ExpectedChecksum = getValueOrDefault $env:BATECT_DOWNLOAD_CHECKSUM 'cc03254f6ce5bb4c9434aa7c2b137b3956157a87de1dc3b11342846363eb068d'^
+
 ^
 
 $RootCacheDir = getValueOrDefault $env:BATECT_CACHE_DIR "$env:USERPROFILE\.batect\cache"^
@@ -67,6 +69,8 @@ function main() {^
     }^
 
 ^
+
+    checkChecksum^
 
     runApplication @args^
 
@@ -123,6 +127,24 @@ function download() {^
     } finally {^
 
         $ProgressPreference = $oldProgressPreference^
+
+    }^
+
+}^
+
+^
+
+function checkChecksum() {^
+
+    $localChecksum = (Get-FileHash -Algorithm 'SHA256' $JarPath).Hash.ToLower()^
+
+^
+
+    if ($localChecksum -ne $expectedChecksum) {^
+
+        Write-Host -ForegroundColor Red "The downloaded version of batect does not have the expected checksum. Delete '$JarPath' and then re-run this script to download it again."^
+
+        exit 1^
 
     }^
 
