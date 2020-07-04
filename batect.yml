@@ -8,11 +8,8 @@ containers:
         container: /code
         options: cached
       - type: cache
-        name: global-gradle-cache
+        name: gradle-cache
         container: /home/container-user/.gradle
-      - type: cache
-        name: project-gradle-cache
-        container: /code/.gradle
     working_directory: /code
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
