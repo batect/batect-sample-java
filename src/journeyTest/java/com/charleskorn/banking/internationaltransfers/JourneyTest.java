@@ -6,8 +6,9 @@ import org.junit.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.hasSize;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
 
 public class JourneyTest {
@@ -47,7 +48,7 @@ public class JourneyTest {
 
         Request request = new Request.Builder()
                 .url(BASE_URL + "/transfers")
-                .post(RequestBody.create(JSON, transfer))
+                .post(RequestBody.create(transfer, JSON))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
