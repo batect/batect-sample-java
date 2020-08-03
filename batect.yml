@@ -70,7 +70,7 @@ tasks:
       container: java-build-env
       command: ./gradlew journeyTest
 
-  app:
+  run:
     description: Run the application.
     group: Test tasks
     prerequisites:
