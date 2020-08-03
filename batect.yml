@@ -1,22 +1,6 @@
 project_name: international-transfers-service
 
 containers:
-  build-env:
-    image: openjdk:8u181-jdk
-    volumes:
-      - local: .
-        container: /code
-        options: cached
-      - type: cache
-        name: gradle-cache
-        container: /home/container-user/.gradle
-    working_directory: /code
-    environment:
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
-    run_as_current_user:
-      enabled: true
-      home_directory: /home/container-user
-
   database:
     build_directory: .batect/database
     environment:
@@ -48,21 +32,21 @@ tasks:
     description: Build the application.
     group: Build tasks
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew assembleDistForContainer
 
   unitTest:
     description: Run the unit tests.
     group: Test tasks
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew test
 
   continuousUnitTest:
     description: Run the unit tests and then re-run them when any code changes are detected.
     group: Test tasks
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew --continuous test
 
   integrationTest:
@@ -72,7 +56,7 @@ tasks:
       - database
       - exchange-rate-service
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew integrationTest
 
   journeyTest:
@@ -83,7 +67,7 @@ tasks:
     dependencies:
       - international-transfers-service
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew journeyTest
 
   app:
@@ -101,14 +85,14 @@ tasks:
     description: Start a shell in the development environment.
     group: Utility tasks
     run:
-      container: build-env
+      container: java-build-env
       command: bash
 
   outdated:
     description: Check for outdated dependencies.
     group: Utility tasks
     run:
-      container: build-env
+      container: java-build-env
       command: ./gradlew dependencyUpdates -Drevision=release
 
   pushImage:
@@ -122,3 +106,8 @@ tasks:
       environment:
         DOCKER_USER: $DOCKER_USER
         DOCKER_PASSWORD: $DOCKER_PASSWORD
+
+include:
+  - type: git
+    repo: https://github.com/batect/java-bundle.git
+    ref: 0.1.0
