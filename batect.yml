@@ -33,7 +33,7 @@ tasks:
     group: Build tasks
     run:
       container: java-build-env
-      command: ./gradlew assembleDistForContainer
+      command: ./gradlew shadowJar
 
   unitTest:
     description: Run the unit tests.

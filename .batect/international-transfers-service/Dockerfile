@@ -7,12 +7,10 @@ RUN apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/t
 
 RUN mkdir -p /tools
 COPY health-check.sh /tools
-
-RUN mkdir -p /app /tmp/unzip
-COPY international-transfers-service.zip /tmp/app.zip
-RUN unzip /tmp/app.zip -d /tmp/unzip && cp -rf /tmp/unzip/*/* /app
-
-CMD ["/app/bin/international-transfers-service"]
 HEALTHCHECK --interval=2s CMD /tools/health-check.sh
+
+RUN mkdir -p /app
+COPY international-transfers-service.jar /app
+CMD ["java", "-jar", "/app/international-transfers-service.jar"]
 
 EXPOSE 6001
