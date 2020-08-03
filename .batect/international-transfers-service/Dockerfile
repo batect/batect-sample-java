@@ -1,7 +1,9 @@
 FROM alpine:3.12.0
 
-RUN apk add --no-cache openjdk8-jre nss
 RUN apk add --no-cache curl
+
+# The explicit '--repository ...' is only necessary while Alpine does not publish a OpenJDK 14 package in the default repository.
+RUN apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing/ openjdk14-jre-headless
 
 RUN mkdir -p /tools
 COPY health-check.sh /tools
