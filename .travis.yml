@@ -4,8 +4,9 @@ services:
   - docker
 
 env:
-  - BATECT_CACHE_TYPE=directory
-  - BATECT_ENABLE_TELEMETRY=true
+  global:
+    - BATECT_CACHE_TYPE=directory
+    - BATECT_ENABLE_TELEMETRY=true
 
 script: ./travis/build.sh
 
