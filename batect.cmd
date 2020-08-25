@@ -6,7 +6,7 @@ rem For more information, visit https://github.com/batect/batect.
 
 setlocal EnableDelayedExpansion
 
-set "version=0.58.2"
+set "version=0.58.3"
 
 if "%BATECT_CACHE_DIR%" == "" (
     set "BATECT_CACHE_DIR=%USERPROFILE%\.batect\cache"
@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'^
 
 ^
 
-$Version='0.58.2'^
+$Version='0.58.3'^
 
 ^
 
@@ -48,7 +48,7 @@ $UrlEncodedVersion = [Uri]::EscapeDataString($Version)^
 
 $DownloadUrl = getValueOrDefault $env:BATECT_DOWNLOAD_URL "$DownloadUrlRoot/$UrlEncodedVersion/bin/batect-$UrlEncodedVersion.jar"^
 
-$ExpectedChecksum = getValueOrDefault $env:BATECT_DOWNLOAD_CHECKSUM '9ef6d4860652a58a3e95f889845924ec2c32018514dd032b7f1dd9722ec07214'^
+$ExpectedChecksum = getValueOrDefault $env:BATECT_DOWNLOAD_CHECKSUM '3bc2771f5b5b4d83c54fadc94dc0666714a7a4ba3c8144d02ffa5dc72f816670'^
 
 ^
 
@@ -403,13 +403,10 @@ rem because it continues execution from the next byte (which was previously the 
 rem By explicitly exiting on the same line as starting the application, we avoid these issues as cmd.exe has already read the entire
 rem line before we start the application and therefore will always exit.
 
-rem if powershell 6+ has been installed then this causes issues invoking batect via powershell 5.
-where /q pwsh.exe
-IF ERRORLEVEL 1 (
-  powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File "%ps1Path%" %* && exit /b 0 || exit /b !ERRORLEVEL!
-) ELSE (
-  pwsh.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File "%ps1Path%" %* && exit /b 0 || exit /b !ERRORLEVEL!
-)
+rem Why do we set PSModulePath?
+rem See issue #627
+set "PSModulePath="
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File "%ps1Path%" %* && exit /b 0 || exit /b !ERRORLEVEL!
 
 rem What's this for?
 rem This is so the tests for the wrapper has a way to ensure that the line above terminates the script correctly.
