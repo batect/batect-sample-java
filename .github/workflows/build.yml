@@ -1,0 +1,65 @@
+name: Pipeline
+
+on: [push]
+
+jobs:
+  build:
+    name: "Build and Test"
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm-256color
+      BATECT_CACHE_TYPE: directory
+      BATECT_ENABLE_TELEMETRY: true
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Batect
+        uses: actions/cache@v2
+        with:
+          path: ~/.batect/cache
+          key: batect-${{ hashFiles('batect') }}
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          path: .batect/caches
+          key: batect-caches-${{ hashFiles('**/*.gradle') }}
+
+      - name: Build application
+        run: ./batect build
+
+      - name: Run unit tests
+        run: ./batect unitTest
+
+      - name: Run integration tests
+        run: ./batect integrationTest
+
+      - name: Run journey tests
+        run: ./batect journeyTest
+
+      - name: Push image
+        run: ./batect pushImage
+        if: github.repository == 'batect/batect-sample-java' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          DOCKER_USER: batectsamplejavagithubactions
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Clean up dependencies before caching
+        if: steps.cache-packages.outputs.cache-hit != 'true'
+        run: |
+          rm -f  .batect/caches/gradle-cache/caches/modules-2/modules-2.lock
+          rm -fr .batect/caches/gradle-cache/caches/*/plugin-resolution/
+          rm -fr .batect/caches/gradle-cache/caches/*/scripts/
+          rm -fr .batect/caches/gradle-cache/caches/*/scripts-remapped/
+          rm -fr .batect/caches/gradle-cache/caches/*/fileHashes/
+          rm -f  .batect/caches/gradle-cache/caches/*/fileContent/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/*/javaCompile/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/*/executionHistory/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/*/generated-gradle-jars/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/jars-3/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/jars-8/*.lock
+          rm -f  .batect/caches/gradle-cache/caches/transforms-1/transforms-1.lock
+          rm -f  .batect/caches/gradle-cache/caches/journal-1/file-access.bin
+          rm -f  .batect/caches/gradle-cache/caches/journal-1/*.lock
+
