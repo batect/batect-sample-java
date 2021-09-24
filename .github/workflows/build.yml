@@ -20,8 +20,9 @@ jobs:
           path: ~/.batect/cache
           key: batect-${{ hashFiles('batect') }}
 
-      - name: Cache NPM dependencies
+      - name: Cache Gradle dependencies
         uses: actions/cache@v2
+        id: cache-packages
         with:
           path: .batect/caches
           key: batect-caches-${{ hashFiles('**/*.gradle') }}
