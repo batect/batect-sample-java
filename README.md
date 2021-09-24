@@ -1,6 +1,6 @@
 # international-transfers-service
 
-[![Build Status](https://travis-ci.com/batect/batect-sample-java.svg?branch=master)](https://travis-ci.com/batect/batect-sample-java)
+[![Pipeline](https://github.com/batect/batect-sample-java/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/batect/batect-sample-java/actions/workflows/build.yml)
 
 A sample service with two dependencies (a database and another service) with [Batect](https://github.com/batect/batect)-based
 build and testing environments.
