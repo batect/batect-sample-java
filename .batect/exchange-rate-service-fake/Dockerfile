@@ -1,4 +1,4 @@
-FROM andyrbell/mountebank:2.4.0
+FROM andyrbell/mountebank:2.5.0
 
 RUN apk add --no-cache curl
 RUN mkdir -p /tools
