@@ -12,7 +12,7 @@ jobs:
       BATECT_ENABLE_TELEMETRY: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache Batect
         uses: actions/cache@v2
