@@ -18,13 +18,13 @@ jobs:
         uses: batect/batect-wrapper-validation-action@v0.4.0
 
       - name: Cache Batect
-        uses: actions/cache@v3.0.5
+        uses: actions/cache@v3.0.6
         with:
           path: ~/.batect/cache
           key: batect-${{ hashFiles('batect') }}
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v3.0.5
+        uses: actions/cache@v3.0.6
         id: cache-packages
         with:
           path: .batect/caches
