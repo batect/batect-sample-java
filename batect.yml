@@ -88,13 +88,6 @@ tasks:
       container: java-build-env
       command: bash
 
-  outdated:
-    description: Check for outdated dependencies.
-    group: Utility tasks
-    run:
-      container: java-build-env
-      command: ./gradlew dependencyUpdates -Drevision=release
-
   pushImage:
     description: Build and push the production application image to Docker Hub.
     group: Publishing tasks
