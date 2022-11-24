@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation 'com.sparkjava:spark-core:2.9.4'
     implementation 'org.slf4j:slf4j-simple:2.0.4'
-    implementation 'org.postgresql:postgresql:42.5.0'
+    implementation 'org.postgresql:postgresql:42.5.1'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.google.code.gson:gson:2.10'
     implementation 'net.dongliu:gson-java8-datatype:1.1.0'
