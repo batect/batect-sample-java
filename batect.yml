@@ -103,4 +103,4 @@ tasks:
 include:
   - type: git
     repo: https://github.com/batect/java-bundle.git
-    ref: 0.5.0
+    ref: 0.6.0
