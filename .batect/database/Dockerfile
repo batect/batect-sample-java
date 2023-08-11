@@ -1,4 +1,4 @@
-FROM postgres:15.3
+FROM postgres:15.4
 
 RUN mkdir -p /tools
 COPY health-check.sh /tools/
